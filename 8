@@ -1,0 +1,102 @@
+package P2;
+import java.util.Scanner;
+
+interface Engineer {
+    int ENGINEER_ID = 1;
+    void showEngineer();
+}
+
+interface Doctor {
+    int DOCTOR_ID = 2;
+    void showDoctor();
+}
+
+public class ProfDB  implements Engineer, Doctor {
+    private Scanner scanner = new Scanner(System.in);
+    
+    // Doctor fields
+    private String doctorName;
+    private int doctorAge;
+    private String doctorSpecialization;
+    
+    // Engineer fields
+    private String engineerName;
+    private int engineerAge;
+    private String engineerSpecialization;
+    
+    // Method to read doctor details
+    public void readDoctorDetails() {
+        System.out.println("\n=== Enter Doctor Details ===");
+        System.out.print("Enter the name of doctor: ");
+        doctorName = scanner.nextLine();
+        
+        System.out.print("Enter the age of doctor: ");
+        doctorAge = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        
+        System.out.print("Enter the specialization of doctor: ");
+        doctorSpecialization = scanner.nextLine();
+    }
+    
+    // Method to read engineer details
+    public void readEngineerDetails() {
+        System.out.println("\n=== Enter Engineer Details ===");
+        System.out.print("Enter the name of engineer: ");
+        engineerName = scanner.nextLine();
+        
+        System.out.print("Enter the age of engineer: ");
+        engineerAge = scanner.nextInt();
+        scanner.nextLine(); // consume newline
+        
+        System.out.print("Enter the specialization of engineer: ");
+        engineerSpecialization = scanner.nextLine();
+    }
+    
+    // Implementation of Doctor interface method
+    @Override
+    public void showDoctor() {
+        System.out.println("\n=== Doctor Information ===");
+        System.out.println("Name: " + doctorName);
+        System.out.println("Age: " + doctorAge);
+        System.out.println("ID: " + DOCTOR_ID);
+        System.out.println("Specialization: " + doctorSpecialization);
+    }
+    
+    // Implementation of Engineer interface method
+    @Override
+    public void showEngineer() {
+        System.out.println("\n=== Engineer Information ===");
+        System.out.println("Name: " + engineerName);
+        System.out.println("Age: " + engineerAge);
+        System.out.println("ID: " + ENGINEER_ID);
+        System.out.println("Specialization: " + engineerSpecialization);
+    }
+    
+    public static void main(String[] args) {
+        ProfDB database = new ProfDB();
+        
+        // Read data
+        database.readDoctorDetails();
+        database.readEngineerDetails();
+        
+        // Display data
+        System.out.println("\n" + "=".repeat(50));
+        database.showDoctor();
+        database.showEngineer();
+        
+        // Demonstrate interface references
+        System.out.println("\n" + "=".repeat(50));
+        System.out.println("Demonstrating Interface References:");
+        
+        Doctor doc = database;
+        Engineer eng = database;
+        
+        doc.showDoctor();
+        eng.showEngineer();
+        
+        // Show constant values
+        System.out.println("\nConstant Values:");
+        System.out.println("Doctor ID Constant: " + Doctor.DOCTOR_ID);
+        System.out.println("Engineer ID Constant: " + Engineer.ENGINEER_ID);
+    }
+}
