@@ -1,0 +1,118 @@
+package P2;
+import java.util.Scanner;
+
+class PlayerBase {
+    String name;
+    int age;
+    
+    PlayerBase(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    void show() {
+        System.out.println();
+        System.out.println("Player Name: " + name);
+        System.out.println("Age: " + age);
+    }
+}
+
+class CricketPlayer extends PlayerBase {
+    String type;
+    String team;
+    
+    CricketPlayer(String name, String type, int age) {
+        super(name, age);
+        this.type = type;
+    }
+    
+    CricketPlayer(String name, String type, int age, String team) {
+        this(name, type, age);
+        this.team = team;
+    }
+    
+    @Override
+    public void show() {
+        super.show();
+        System.out.println("Player Type: " + type);
+        if (team != null) {
+            System.out.println("Team: " + team);
+        }
+    }
+}
+
+class FootballPlayer extends PlayerBase {
+    String type;
+    String position;
+    
+    FootballPlayer(String name, String type, int age) {
+        super(name, age);
+        this.type = type;
+    }
+    
+    FootballPlayer(String name, String type, int age, String position) {
+        this(name, type, age);
+        this.position = position;
+    }
+    
+    @Override
+    public void show() {
+        super.show();
+        System.out.println("Player Type: " + type);
+        if (position != null) {
+            System.out.println("Position: " + position);
+        }
+    }
+}
+
+class HockeyPlayer extends PlayerBase {
+    String type;
+    int jerseyNumber;
+    
+    HockeyPlayer(String name, String type, int age) {
+        super(name, age);
+        this.type = type;
+    }
+    
+    HockeyPlayer(String name, String type, int age, int jerseyNumber) {
+        this(name, type, age);
+        this.jerseyNumber = jerseyNumber;
+    }
+    
+    @Override
+    public void show() {
+        super.show();
+        System.out.println("Player Type: " + type);
+        if (jerseyNumber != 0) {
+            System.out.println("Jersey Number: " + jerseyNumber);
+        }
+    }
+}
+
+public class PlayerDemo {
+    public static void main(String[] args) {
+        // Create player objects
+        CricketPlayer cricketPlayer = new CricketPlayer("Virat Kohli", "Cricket", 34, "India");
+        FootballPlayer footballPlayer = new FootballPlayer("Lionel Messi", "Football", 36, "Forward");
+        HockeyPlayer hockeyPlayer = new HockeyPlayer("Ajay Kumar", "Hockey", 28, 7);
+        
+        // Display player information
+        System.out.println("=== PLAYER INFORMATION ===");
+        cricketPlayer.show();
+        footballPlayer.show();
+        hockeyPlayer.show();
+        
+        // Demonstrate polymorphism
+        System.out.println("\n=== DEMONSTRATING POLYMORPHISM ===");
+        PlayerBase[] players = {
+            new CricketPlayer("Rohit Sharma", "Cricket", 35),
+            new FootballPlayer("Cristiano Ronaldo", "Football", 38),
+            new HockeyPlayer("Manpreet Singh", "Hockey", 31)
+        };
+        
+        for (PlayerBase player : players) {
+            player.show();
+            System.out.println("-------------------");
+        }
+    }
+}
