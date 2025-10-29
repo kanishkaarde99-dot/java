@@ -1,0 +1,70 @@
+package P2;
+import java.util.Scanner;
+
+public class MatrixAddition {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        // Define matrix size as constant for flexibility
+        final int ROWS = 2;
+        final int COLS = 2;
+        
+        int[][] matrix1 = new int[ROWS][COLS];
+        int[][] matrix2 = new int[ROWS][COLS];
+        int[][] result = new int[ROWS][COLS];
+        
+        // Input first matrix
+        System.out.println("Enter the elements of first matrix (" + ROWS + "x" + COLS + "):");
+        readMatrix(matrix1, sc);
+        
+        // Display first matrix
+        System.out.println("The first matrix is:");
+        printMatrix(matrix1);
+        
+        // Input second matrix
+        System.out.println("Enter the elements of second matrix (" + ROWS + "x" + COLS +           "):");
+        readMatrix(matrix2, sc);
+        
+        // Display second matrix
+        System.out.println("Second matrix is:");
+        printMatrix(matrix2);
+        
+        // Perform addition
+        addMatrices(matrix1, matrix2, result);
+        
+        // Display result
+        System.out.println("The addition of two matrices is:");
+        printMatrix(result);
+        
+        sc.close();
+    }
+    
+    // Method to read matrix elements from user
+    public static void readMatrix(int[][] matrix, Scanner sc) {
+        for(int i = 0; i < matrix.length; i++) {
+            for(int j = 0; j < matrix[i].length; j++) {
+                System.out.print("Element [" + i + "][" + j + "]: ");
+                matrix[i][j] = sc.nextInt();
+            }
+        }
+    }
+    
+    // Method to print a matrix
+    public static void printMatrix(int[][] matrix) {
+        for(int i = 0; i < matrix.length; i++) {
+            for(int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + "\t");
+            }
+            System.out.println();
+        }
+    }
+    
+    // Method to add two matrices
+    public static void addMatrices(int[][] matrix1, int[][] matrix2, int[][] result) {
+        for(int i = 0; i < matrix1.length; i++) {
+            for(int j = 0; j < matrix1[i].length; j++) {
+                result[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        }
+    }
+}
