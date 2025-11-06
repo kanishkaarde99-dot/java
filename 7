@@ -1,118 +1,101 @@
 package P2;
-import java.util.Scanner;
 
+// --- CONCEPT 1: THE PARENT (BASE) CLASS ---
+// This class has the common features for ALL players.
 class PlayerBase {
     String name;
     int age;
     
+    // The constructor for the base class
     PlayerBase(String name, int age) {
         this.name = name;
         this.age = age;
     }
     
+    // The base 'show' method
     void show() {
-        System.out.println();
-        System.out.println("Player Name: " + name);
-        System.out.println("Age: " + age);
+        System.out.println("\nPlayer Name: " + name);
+        System.out.println("Player Age: " + age);
     }
 }
 
+// --- CONCEPT 2: CHILD (DERIVED) CLASSES ---
+// "extends PlayerBase" means it INHERITS all fields/methods from PlayerBase
 class CricketPlayer extends PlayerBase {
-    String type;
-    String team;
+    String type; // This field is specific to CricketPlayer
     
-    CricketPlayer(String name, String type, int age) {
+    CricketPlayer(String name, int age, String type) {
+        // We MUST call the parent's constructor using 'super()'
+        // This sets up the 'name' and 'age' fields in the parent.
         super(name, age);
         this.type = type;
     }
     
-    CricketPlayer(String name, String type, int age, String team) {
-        this(name, type, age);
-        this.team = team;
-    }
-    
+    // --- CONCEPT 3: METHOD OVERRIDING ---
+    // We provide a new, specific 'show()' method for this child class.
     @Override
     public void show() {
-        super.show();
+        // We can still run the original parent's code
+        super.show(); 
+        
+        // And then add our own specific code
         System.out.println("Player Type: " + type);
-        if (team != null) {
-            System.out.println("Team: " + team);
-        }
     }
 }
 
+// We need a second child class to demonstrate inheritance
 class FootballPlayer extends PlayerBase {
-    String type;
-    String position;
+    String position; // This field is specific to FootballPlayer
     
-    FootballPlayer(String name, String type, int age) {
-        super(name, age);
-        this.type = type;
-    }
-    
-    FootballPlayer(String name, String type, int age, String position) {
-        this(name, type, age);
+    FootballPlayer(String name, int age, String position) {
+        super(name, age); // Call the parent's constructor
         this.position = position;
     }
     
     @Override
     public void show() {
-        super.show();
-        System.out.println("Player Type: " + type);
-        if (position != null) {
-            System.out.println("Position: " + position);
-        }
+        super.show(); // Call parent's 'show()'
+        System.out.println("Position: " + position);
     }
 }
 
+// A third child class to demonstrate inheritance
 class HockeyPlayer extends PlayerBase {
-    String type;
-    int jerseyNumber;
+    String role; // Specific field for HockeyPlayer
     
-    HockeyPlayer(String name, String type, int age) {
-        super(name, age);
-        this.type = type;
-    }
-    
-    HockeyPlayer(String name, String type, int age, int jerseyNumber) {
-        this(name, type, age);
-        this.jerseyNumber = jerseyNumber;
+    HockeyPlayer(String name, int age, String role) {
+        super(name, age); // Call the parent's constructor
+        this.role = role;
     }
     
     @Override
     public void show() {
-        super.show();
-        System.out.println("Player Type: " + type);
-        if (jerseyNumber != 0) {
-            System.out.println("Jersey Number: " + jerseyNumber);
-        }
+        super.show(); // Call parent's 'show()'
+        System.out.println("Player Role: " + role);
     }
 }
 
+
+// --- DEMO CLASS ---
 public class PlayerDemo {
     public static void main(String[] args) {
-        // Create player objects
-        CricketPlayer cricketPlayer = new CricketPlayer("Virat Kohli", "Cricket", 34, "India");
-        FootballPlayer footballPlayer = new FootballPlayer("Lionel Messi", "Football", 36, "Forward");
-        HockeyPlayer hockeyPlayer = new HockeyPlayer("Ajay Kumar", "Hockey", 28, 7);
         
-        // Display player information
-        System.out.println("=== PLAYER INFORMATION ===");
-        cricketPlayer.show();
-        footballPlayer.show();
-        hockeyPlayer.show();
+        // --- *** CHANGED SECTION *** ---
+        // --- DEMONSTRATING INHERITANCE ---
         
-        // Demonstrate polymorphism
-        System.out.println("\n=== DEMONSTRATING POLYMORPHISM ===");
-        PlayerBase[] players = {
-            new CricketPlayer("Rohit Sharma", "Cricket", 35),
-            new FootballPlayer("Cristiano Ronaldo", "Football", 38),
-            new HockeyPlayer("Manpreet Singh", "Hockey", 31)
-        };
+        // We create specific objects for each child class.
+        // This is no longer a polymorphic array.
+        CricketPlayer c = new CricketPlayer("Virat Kohli",45, "Cricket");
+        FootballPlayer f = new FootballPlayer("Lionel Messi", 36, "Forward");
+        HockeyPlayer h = new HockeyPlayer("Ajay", 42, "Goaltender");
         
-        for (PlayerBase player : players) {
-            player.show();
-            System.out.println("-------------------");
-        }
+        System.out.println("=== DEMONSTRATING INHERITANCE ===");
+        
+        // We call the 'show()' method on each specific object.
+        // Java calls the overridden method for each class.
+        c.show(); 
+        f.show();
+        h.show();
     }
 }
+
