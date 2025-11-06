@@ -1,0 +1,65 @@
+package P2;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException; // We MUST import this
+import java.util.Scanner;
+import java.util.Date;
+// * A "brittle" example showing what happens without try-catch.
+// * This code will crash on the FIRST error.
+public class FileHandlingThrows {
+    // CRITICAL CHANGE: "throws IOException"
+    // We are telling the compiler that this main method MIGHT throw an error, and we are NOT going to catch it.
+    public static void main(String[] args) throws IOException {
+        
+        String fileName = "my-short-file.txt";
+        Scanner sc = new Scanner(System.in);
+
+        FileWriter w = new FileWriter(fileName);
+        System.out.println("Writing to file: " + fileName);
+        w.write("Hello, this is a short file handling demo.\n");
+        w.write("This is the second line.\n");
+        w.write("...Write complete.\n");
+        w.close(); // We must manually close it now
+        
+        System.out.println("\n----------------------------\n");
+        File f = new File(fileName);
+
+        Scanner fileScanner = new Scanner(f);
+        System.out.println("Reading from file: " + fileName);
+        while (fileScanner.hasNextLine()) {
+            System.out.println(fileScanner.nextLine());
+        }
+        fileScanner.close(); // Manually close
+
+        System.out.println("\n----------------------------\n");
+
+        System.out.println("3. Getting file info...");
+        if (f.exists()) {
+            System.out.println("File Name: " + f.getName());
+            System.out.println("Absolute Path: " + f.getAbsolutePath());
+            System.out.println("Size: " + f.length() + " bytes");
+            System.out.println("Last Modified: " + new Date(f.lastModified()));
+        } else {
+            System.out.println("File does not exist to get info from.");
+        }
+
+        System.out.println("\n----------------------------\n");
+
+        System.out.println("4. Deleting file...");
+        System.out.print("Do you want to delete '" + fileName + "'? (yes/no): ");
+        String choice = sc.nextLine().trim().toLowerCase();
+        
+        if (choice.equals("yes") || choice.equals("y")) {
+            if (f.delete()) {
+                System.out.println("File deleted successfully.");
+            } else {
+                System.out.println("Failed to delete the file.");
+            }
+        } else {
+            System.out.println("File deletion cancelled.");
+        }
+        
+        sc.close();
+    }
+}
